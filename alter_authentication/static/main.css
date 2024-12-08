@@ -1,0 +1,60 @@
+.fixed_button {
+  background-color : #dc3545;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 50%;
+  border-color: #dc3545;
+}
+
+#sticky_button {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+/* The sidebar menu */
+.sidenav {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 16%; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 20px; /* Stay at the top */
+  left: 0;
+  background-color: #eee;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 30px;
+}
+
+/* The navigation menu links */
+/* .sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+/* .sidenav a:hover {
+  color: #f1f1f1;
+} */ */
+
+.sidenavbutton {
+  height: 60px; /* Full-height: remove this if you want "auto" height */
+  width: 100%; /* Set the width of the sidebar */
+  padding: 6px 8px 6px 16px;
+  background-color: #eee;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+}
+
+.sidenavbutton:hover{
+  background-color: #f1f1f1;
+}
+
+.middleScrollNavWideScreen {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 42%; /* Set the width of the sidebar */
+  background-color: #eee;
+  padding-top: 20px;
+}

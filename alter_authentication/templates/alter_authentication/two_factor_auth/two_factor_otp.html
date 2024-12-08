@@ -1,0 +1,48 @@
+<div class="form-group">
+    <label for="otp_message">Проверка через одноразовый пароль:</label>
+    {% if user_email %}
+        <p>Одноразовый пароль был отправлен на вашу почту: {{ user_email }}</p>
+    {% else %}
+        <div class="form-group">
+            <label for="otp_email_input">Введите вашу почту для получения одноразового пароля:</label>
+            <input type="email" id="otp_email_input" class="form-control" name="otp_email" required>
+            <button type="button" id="send_otp_btn" class="btn btn-secondary mt-2">Отправить одноразовый пароль</button>
+        </div>
+    {% endif %}
+    <label for="user_data">Введите одноразовый пароль:</label>
+    {{ form.user_data }}
+    {% if form.user_data.errors %}
+        <div class="invalid-feedback d-block">
+            {% for error in form.user_data.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <div class="form-group text-center mt-3">
+        <button type="submit" class="btn btn-primary">Подтвердить</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('send_otp_btn')?.addEventListener('click', function () {
+        const email = document.getElementById('otp_email_input').value;
+        if (email) {
+            fetch('{% url "send_one_time_password_to_email" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message || 'Одноразовый пароль отправлен.');
+            })
+            .catch(error => console.error('Ошибка при отправке OTP:', error));
+        } else {
+            alert('Пожалуйста, введите email.');
+        }
+    });
+</script>

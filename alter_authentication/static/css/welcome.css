@@ -1,0 +1,111 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.welcome-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    margin: 5%;
+    border-radius: 20px;
+    background-color: #EAEDED;
+    height: 80vh; /* Высота во всю высоту viewport */
+}
+
+.left-section {
+    flex: 1;
+    color: #333333;
+}
+
+.right-section {
+    flex: 1;
+    /* Здесь разместите стили для формы входа */
+    /* background-image: url('../images/welcome_background_1.jpg'); */
+    background-size: cover; /* Это свойство убедится, что ваше изображение масштабируется, чтобы заполнить div, сохраняя при этом свои пропорции */
+    background-position: center; /* Это свойство поможет центрировать изображение */
+}
+
+.slogan {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    font-family: 'Lobster';
+    /* font-family: "Times New Roman", Times, serif; */
+}
+
+.sub-slogan {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 1em;
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+.login-form-container {
+    display: flex;
+    position: relative;
+    /* background-color: #D9E3E6; */
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    min-height: 450px;
+    width: 90%;  /* или другое значение в зависимости от размеров родительского элемента */
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* .login-form label,  */
+.login-form input {
+  width: 300px;  /* изменение ширины элемента input */
+  height: 40px;  /* изменение высоты элемента input */
+  border: none;
+  margin-bottom: 5px;
+  padding: 5px;  /* добавление отступа внутри input */
+  border-radius: 8px;  /* добавление радиуса скругления */
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1); /* тень сверху вниз */
+  transition: box-shadow 0.3s ease; /* Плавное изменение тени при изменении */
+}
+
+.login-form input:read-only {
+  /* Ваш стиль для элемента с атрибутом readonly */
+  background-color: #f0f0f0; /* Пример: изменение фона */
+  color: #999; /* Пример: изменение цвета текста */
+  /* cursor: not-allowed; /* Пример: изменение курсора */ */
+  /* Другие стили, которые вы хотите применить */
+}
+
+.login-form input:hover {
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); /* Новая тень при наведении */
+}
+
+@keyframes pulse {
+  0% {
+    color: blue;
+  }
+  50% {
+    color: black;
+  }
+  100% {
+    color: blue;
+  }
+}
+
+.pulsating-text {
+  animation: pulse 2s infinite; /* Анимация будет длиться 2 секунды и повторяться бесконечно */
+}

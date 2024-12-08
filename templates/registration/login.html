@@ -1,0 +1,67 @@
+{% extends "welcome/welcome.html" %}
+
+{% block content %}
+
+<div class="login-form-container">
+    <form class="login-form" id="login-form" method="post" action="{% url 'newlogin' %}">
+      {% if form.errors %}
+        <p>Неправильный логин или пароль</p>
+        {% endif %}
+        {% if request.GET.error %}
+            <div class="alert alert-danger">
+                {{ request.GET.error }}
+            </div>
+        {% endif %}
+      
+
+
+      {% if next %}
+        {% if user.is_authenticated %}
+          <p>Your account doesn't have access to this page. To proceed,
+          please login with an account that has access.</p>
+        {% else %}
+        {% endif %}
+      {% endif %}
+      {% csrf_token %}
+        <label for="username" class="text-muted">логин</label>
+        {{ form.username }}
+
+
+        <ul class="nav nav-tabs nav-fill mt-3">
+          <li class="nav-item">
+            <a class="nav-link active" id="btn_show_pswrd"type="button" onclick="showPasswordField();">пароль</a>
+          </li>
+        </ul>
+
+        <div id="main_password_field" class="login-form">
+            {{ form.password }}
+            <div class="d-flex justify-content-end">
+              <small class="text-right form-text"> <a class="text-muted" href="{% url 'password_reset' %}">забыл пароль?</a> </small>
+            </div>
+
+            <button type="button" onclick="$('#login-form').submit()" class="tree-end mt-3" >вход</button>
+            <input type="hidden" name="next" value="{{ next }}" />
+
+        </div>
+
+        <div>
+            {% if otp_error %}
+            {{otp_error}}
+            {% endif %}
+        </div>
+
+        <a class="text-center"
+            style="position: absolute;
+                    bottom: 0;
+                    right: 0;"
+            href="{% url 'register_view' %}">Регистрация</a>
+    </form>
+
+
+</div>
+<script>
+  {% include 'registration/login.js'%}
+</script>
+
+
+{% endblock %}

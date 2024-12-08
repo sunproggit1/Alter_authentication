@@ -1,0 +1,65 @@
+{% extends "alter_authentication/baseWrapper.html" %}
+{% load authentication_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-body text-center">
+                    <div class="alert alert-success" role="alert">
+                        <!-- Карточка профиля -->
+                        <strong>Профиль</strong> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Левое меню -->
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <!-- Ссылка на раздел двухфакторной аутентификации -->
+                        <a class="nav-link" href="#" id="two-factor-link">
+                            Двухфакторная аутентификация
+                        </a>
+                        <!-- Ссылка на раздел смены пароля -->
+                        <a class="nav-link" href="#" id="password-change-link">
+                            Смена пароля
+                        </a>
+                    </li>
+                    <!-- Другие пункты меню можно добавить здесь -->
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Основное содержание -->
+        <!-- Раздел двухфакторной аутентификации -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div id="two-factor-section" class="content-section" style="display: none;">
+                <!-- Подгружается содержимое для двухфакторной аутентификации -->
+                {% include "alter_authentication/profile/two_factor_content.html" %}
+            </div>
+        </main>
+
+        <!-- Раздел смены пароля -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div id="password-change-section" class="content-section" style="display: none;">
+                <!-- Подгружается содержимое для смены пароля -->
+                {% include "alter_authentication/profile/password_change_content.html" %}
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    // Подключение логики для управления профилем
+    {% include "alter_authentication/profile/profile.js" %}
+</script>
+
+{% endblock %}

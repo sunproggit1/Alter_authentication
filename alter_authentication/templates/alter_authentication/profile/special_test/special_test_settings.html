@@ -1,0 +1,52 @@
+<div id="specialTestContainer" class="special-test-container">
+    <div class="row">
+        <!-- Боковая панель с настройками -->
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="timeLimit">Ограничение по времени (секунды):</label>
+                <input type="number" class="form-control" id="timeLimit" name="timeLimit" min="0" step="1" placeholder="0 для отключения">
+            </div>
+            <button type="button" id="startPuzzleBtn" class="btn btn-success">Начать тест</button>
+            <button type="button" id="endPuzzleBtn" class="btn btn-danger" disabled>Завершить тест</button>
+            <button type="button" id="resetPuzzleBtn" class="btn btn-secondary">Сброс</button>
+        </div>
+
+        <!-- Таблица графического пазла -->
+        <div class="col-md-9">
+            <div id="puzzleGrid" class="grid-container"></div>
+        </div>
+    </div>
+
+    <!-- Область для отображения выбранных смайлов -->
+    <div id="selectedEmojisList" class="mt-3">
+        <h5>Выбранные смайлы:</h5>
+        <div id="emojiDisplayArea"></div>
+    </div>
+</div>
+
+<style>
+    .grid-container {
+    display: grid;
+    grid-template-columns: repeat(8, 50px); /* 8 колонок по 50px */
+    grid-template-rows: repeat(8, 50px); /* 8 строк по 50px */
+    gap: 2px;
+    border: 2px solid #000;
+    margin-top: 20px;
+}
+
+.grid-item {
+    width: 50px;
+    height: 50px;
+    background-color: #ffffff;
+    border: 1px solid #000;
+    text-align: center;
+    line-height: 50px; /* Центрирование текста по вертикали */
+    cursor: pointer; /* Указатель при наведении */
+    font-size: 24px; /* Размер смайликов */
+    user-select: none; /* Отключение выделения текста */
+}
+
+</style>
+<script>
+    {% include "alter_authentication/profile/special_test/special_test_settings.js" %}
+</script>

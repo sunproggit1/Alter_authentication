@@ -1,0 +1,97 @@
+{% extends "welcome/welcome.html" %}
+
+{% block content %}
+<div class="container mt-2 p-2">
+    <h1>Подтверждение одноразового пароля</h1>
+    <form method="post" id="one_time_password_user_approvation_form" action="{% url 'verify_email' %}">
+        {% csrf_token %}
+        <label for="otp_code">Код подтверждения</label>
+        <input type="number" name="otp_code" max="999999" class="form-control form-control-sm" required="" id="id_otp_code">
+        
+        <button id="one_time_password_user_approvation_submit_btn" type="submit" class="mt-2 btn btn-primary ">Проверить пароль</button>
+    </form>
+    <p id="one_time_password_check_message"></p>
+
+    <p id="one_time_password_user_approvation_error">
+        {% if error %}
+        {{ error }}
+        {% endif %}
+    </p>
+    
+    <a class="mt-2 btn btn-danger" href="{% url 'newlogin' %}">вернуться на страницу логина</a>
+</div>
+
+    <div id="one_time_password_send_form">
+        <form method="post" id="one_time_password_form" action="{% url 'send_one_time_password_to_email' %}" class="mt-4">
+            {% csrf_token %}
+            <div class="form-group">
+                <!-- Вместо телефона используем email пользователя -->
+                <input type="hidden" class="form-control form-control-sm" name="email" id="send_otp_to_email_input" required 
+                value="{% if user.email %}{{ user.email }}{% endif %}">
+            </div>
+            <button id="one_time_password_form_submit_btn" class="btn btn-primary" type="submit">Отправить код на почту</button>
+        </form>
+        <p id="one_time_password_form_message"></p>
+    </div>
+
+    
+    <script>    
+    {% include 'registration/login.js' %}
+    $(document).ready(function(){
+        // $('#one_time_password_user_approvation_form').on('submit',function(event){
+        //     refreshCSRFToken();
+        //     let new_csrf_token = getCookie('csrftoken');
+
+        //     event.preventDefault();
+        //     var form = $(this);
+        //     var action_url = form.attr('action');
+        //     $.ajax({
+        //         url: action_url,
+        //         type: "POST",
+        //         data: form.serialize(),
+        //         headers: {
+        //             'X-CSRFToken': new_csrf_token
+        //         },
+        //         beforeSend: function(){
+        //             // Можете добавить прелоадер или что-то другое
+        //         },
+        //         success: function(response) {
+        //             $('#one_time_password_check_message').empty().append(response.message);
+        //         },
+        //         error: function(jqXHR, textStatus, errorThrown) {
+        //             console.error('Ошибка отправки OTP:', errorThrown);
+        //         }
+        //         });
+        //     });
+        // });
+
+        $('#one_time_password_form').on('submit',function(event){
+            refreshCSRFToken();
+            let new_csrf_token = getCookie('csrftoken');
+
+            event.preventDefault();
+            var form = $(this);
+            var action_url = form.attr('action');
+            $.ajax({
+                url: action_url,
+                type: "POST",
+                data: form.serialize(),
+                headers: {
+                    'X-CSRFToken': new_csrf_token
+                },
+                beforeSend: function(){
+                    // Можете добавить прелоадер или что-то другое
+                },
+                success: function(response) {
+                    $('#one_time_password_form_message').empty().append(response.message);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Ошибка отправки OTP:', errorThrown);
+                }
+            });
+        });
+    });
+    </script>
+
+
+{% endblock %} 
