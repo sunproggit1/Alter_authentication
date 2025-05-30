@@ -74,6 +74,15 @@ $(document).ready(function() {
             $('#testForm').show(); // Показываем форму для Test
         }
     });
+
+    function toggleSection(linkId, sectionToShow, sectionsToHide = []) {
+        $(linkId).on('click', function(e) {
+            e.preventDefault(); // 
+            sectionsToHide.forEach(section => $(section).hide()); // секцияларды жасырамыз
+            $(sectionToShow).toggle(); // белгіленген секцияның көріну қабілетін ауыстырамыз
+        });
+    }
+    
     // Показ/скрытие секций
     toggleSection('#two-factor-link', '#two-factor-section', ['#password-change-section']);
     toggleSection('#password-change-link', '#password-change-section', ['#two-factor-section']);

@@ -124,6 +124,121 @@ $(document).ready(function () {
         updateDisplay(); // Мәліметтерді көрсету жаңартылды
     }
 
+    
+    $('#moveUp').on('click', function () {
+        
+        let newX = characterX -1;
+        let newY = characterY;
+    
+        // Тор шегін тексеру
+        if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+            let targetCell = $(`.grid-cell[data-x="${newX}"][data-y="${newY}"]`);
+            if (targetCell.hasClass('rock')) {
+                console.log('Перемещение невозможно: препятствие');
+                return;
+            }
+
+            moveCharacterTo(newX, newY);
+            console.log(`Персонаж перемещен в ячейку (${newX}, ${newY})`);
+
+            if (destinationSet && newX == destination.x && newY == destination.y) {
+                console.log('Персонаж достиг цели. Дальнейшее перемещение запрещено.');
+                characterFixed = true;
+                $('#saveSettingsBtn').show(); // Түймені көрсету
+            }
+        } else {
+            console.log('Перемещение невозможно: выход за пределы сетки');
+        }
+
+    });
+
+
+    $('#moveDown').on('click', function () {
+        
+        let newX = characterX + 1;
+        let newY = characterY;
+    
+        // Тор шегін тексеру
+        if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+            let targetCell = $(`.grid-cell[data-x="${newX}"][data-y="${newY}"]`);
+            if (targetCell.hasClass('rock')) {
+                console.log('Перемещение невозможно: препятствие');
+                return;
+            }
+
+            moveCharacterTo(newX, newY);
+            console.log(`Персонаж перемещен в ячейку (${newX}, ${newY})`);
+
+            if (destinationSet && newX == destination.x && newY == destination.y) {
+                console.log('Персонаж достиг цели. Дальнейшее перемещение запрещено.');
+                characterFixed = true;
+                $('#saveSettingsBtn').show(); // Түймені көрсету
+            }
+        } else {
+            console.log('Перемещение невозможно: выход за пределы сетки');
+        }
+
+    });
+
+
+    $('#moveLeft').on('click', function () {
+        
+        let newX = characterX;
+        let newY = characterY - 1;
+    
+        // Тор шегін тексеру
+        if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+            let targetCell = $(`.grid-cell[data-x="${newX}"][data-y="${newY}"]`);
+            if (targetCell.hasClass('rock')) {
+                console.log('Перемещение невозможно: препятствие');
+                return;
+            }
+
+            moveCharacterTo(newX, newY);
+            console.log(`Персонаж перемещен в ячейку (${newX}, ${newY})`);
+
+            if (destinationSet && newX == destination.x && newY == destination.y) {
+                console.log('Персонаж достиг цели. Дальнейшее перемещение запрещено.');
+                characterFixed = true;
+                $('#saveSettingsBtn').show(); // Түймені көрсету
+            }
+        } else {
+            console.log('Перемещение невозможно: выход за пределы сетки');
+        }
+
+    });
+
+
+    $('#moveRight').on('click', function () {
+        
+        let newX = characterX;
+        let newY = characterY + 1;
+    
+        // Тор шегін тексеру
+        if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+            let targetCell = $(`.grid-cell[data-x="${newX}"][data-y="${newY}"]`);
+            if (targetCell.hasClass('rock')) {
+                console.log('Перемещение невозможно: препятствие');
+                return;
+            }
+
+            moveCharacterTo(newX, newY);
+            console.log(`Персонаж перемещен в ячейку (${newX}, ${newY})`);
+
+            if (destinationSet && newX == destination.x && newY == destination.y) {
+                console.log('Персонаж достиг цели. Дальнейшее перемещение запрещено.');
+                characterFixed = true;
+                $('#saveSettingsBtn').show(); // Түймені көрсету
+            }
+        } else {
+            console.log('Перемещение невозможно: выход за пределы сетки');
+        }
+
+    });
+
+    
+
+
     // Кейіпкерді пернелер арқылы жылжыту
     $(document).keydown(function (e) {
         if (activeMode || characterFixed) {
