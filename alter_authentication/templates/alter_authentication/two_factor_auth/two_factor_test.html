@@ -1,0 +1,208 @@
+{% load authentication_tags %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Кнопки управления -->
+            <div class="text-center mb-3">
+                <button class="btn btn-secondary control-btn" id="moveUp" type="button">⬆️</button>
+            </div>
+            <div class="text-center mb-3">
+                <button class="btn btn-secondary control-btn" id="moveLeft" type="button">⬅️</button>
+                <button class="btn btn-secondary control-btn" id="moveDown" type="button">⬇️</button>
+                <button class="btn btn-secondary control-btn" id="moveRight" type="button">➡️</button>
+            </div>
+            
+
+            <div id="testGridContainer" class="grid-container"></div>
+            <div class="text-center mt-3">
+                <button id="saveTestBtn" class="btn btn-primary">Подтвердить</button>
+                <button id="resetTestBtn" class="btn btn-danger">Сброс</button>
+            </div>
+            <div class="mt-3">
+                <h5>Цепочка перемещений:</h5>
+                <p id="pathDisplay"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+var pathChain = [];
+$(document).ready(function () {
+    let character = $('<div class="character">🧍</div>');
+    let characterX = 0;
+    let characterY = 0;
+    let characterFixed = false;
+
+    function createTestGrid() {
+        let gridContainer = $('#testGridContainer');
+        gridContainer.empty();
+
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                let cell = $('<div></div>')
+                    .addClass('grid-cell grass')
+                    .attr('data-x', i)
+                    .attr('data-y', j);
+                gridContainer.append(cell);
+            }
+        }
+
+        placeCharacter(characterX, characterY);
+        updatePathDisplay();
+    }
+
+    function placeCharacter(x, y) {
+        $('.grid-cell').removeClass('character').text('');
+        let targetCell = $(`.grid-cell[data-x="${x}"][data-y="${y}"]`);
+        targetCell.append(character);
+        pathChain.push({ x, y });
+        updatePathDisplay();
+    }
+
+    function moveCharacter(newX, newY) {
+        if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+            placeCharacter(newX, newY);
+            characterX = newX;
+            characterY = newY;
+        } else {
+            console.log('Выход за пределы сетки.');
+        }
+    }
+
+    $('#moveUp').on('click', function () {
+        if (!characterFixed) moveCharacter(characterX - 1, characterY);
+    });
+
+    $('#moveDown').on('click', function () {
+        if (!characterFixed) moveCharacter(characterX + 1, characterY);
+    });
+
+    $('#moveLeft').on('click', function () {
+        if (!characterFixed) moveCharacter(characterX, characterY - 1);
+    });
+
+    $('#moveRight').on('click', function () {
+        if (!characterFixed) moveCharacter(characterX, characterY + 1);
+    });
+    
+    $(document).keydown(function (e) {
+        if (characterFixed) {
+            console.log('Движение запрещено. Персонаж достиг пункта назначения.');
+            return;
+        }
+
+        let newX = characterX;
+        let newY = characterY;
+
+        switch (e.key) {
+            case 'ArrowUp': newX--; break;
+            case 'ArrowDown': newX++; break;
+            case 'ArrowLeft': newY--; break;
+            case 'ArrowRight': newY++; break;
+            default: return;
+        }
+
+        if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+            placeCharacter(newX, newY);
+            characterX = newX;
+            characterY = newY;
+        } else {
+            console.log('Выход за пределы сетки.');
+        }
+    });
+
+    $('#resetTestBtn').on('click', function () {
+        characterX = 0;
+        characterY = 0;
+        pathChain = [];
+        characterFixed = false;
+        createTestGrid();
+        console.log('Тест сброшен.');
+    });
+
+    // $('#saveTestBtn').on('click', function () {
+    //     event.preventDefault();
+    //     const settingsData = {
+    //         value_chain: pathChain // Здесь путь, который вы формируете
+    //     };
+    //     console.log('settingsData:', settingsData, 'json_stringified: ', JSON.stringify(settingsData.value_chain));
+    //     refreshCSRFToken();
+    //     let new_csrf_token = getCookie('csrftoken');
+    //     $.ajax({
+    //         url: "{% url 'two_factor_auth_login' %}",
+    //         type: 'POST',
+    //         headers: {
+    //             'X-CSRFToken': new_csrf_token,
+    //         },
+    //         data: {
+    //             user_data: JSON.stringify(settingsData.value_chain)
+    //         },
+    //         success: function (response) {
+    //             alert(response.message || 'Тест сохранен.');
+    //         },
+    //         error: function (xhr, status, error) {
+    //             console.error('Ошибка при сохранении:', error);
+    //         }
+    //     });
+    // });
+
+    
+    document.getElementById('saveTestBtn').addEventListener('click', function () {
+        // settingsData объектісін құрамыз, ол жол тізбегін (pathChain) сақтайды
+        const settingsData = {
+            value_chain: pathChain // Мұнда сіз құрайтын жол тізбегі
+        };
+        console.log('settingsData:', settingsData); // Логқа мәліметтерді шығару
+
+        // settingsData мәнін жасырын өріске орнатамыз
+        document.getElementById('hiddenUserData').value = JSON.stringify(settingsData.value_chain);
+
+        // Форманы жібереміз
+        document.getElementById('testForm').submit();
+    });
+
+
+    // Мәліметтерді көрсету және жаңарту
+    function updatePathDisplay() {
+        let pathDisplay = pathChain.map(coord => `[${coord.x},${coord.y}]`).join(', ');
+        $('#pathDisplay').text(`Цепочка: ${pathDisplay}`);
+    }
+
+    createTestGrid();
+});
+
+</script>
+
+<style>
+    .control-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 20px;
+        margin: 5px;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(8, 40px);
+        grid-template-rows: repeat(8, 40px);
+        gap: 2px;
+        justify-content: center;
+        margin: 20px auto;
+    }
+    .grid-cell {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #e0ffe0;
+    }
+    .character {
+        font-size: 24px;
+    }
+</style>

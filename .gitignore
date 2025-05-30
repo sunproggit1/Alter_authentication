@@ -1,0 +1,55 @@
+# Python
+*.pyc
+*.pyo
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environment
+venv/
+.env
+*.env
+
+# Django
+db.sqlite3
+/media/
+*.log
+*.pot
+*.py[cod]
+local_settings.py
+
+# Static and media files
+/static/
+media/
+staticfiles/
+*.bak
+
+# Docker
+docker-compose.override.yml
+*.env
+*.db
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Linux
+*~
+
+# Logs and debug files
+*.log
+debug.log
+
+# Git
+*.swp
+.idea/
+*.bak
+*.orig
+*.tmp

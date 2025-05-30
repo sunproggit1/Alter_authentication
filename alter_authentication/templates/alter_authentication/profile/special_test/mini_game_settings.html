@@ -1,0 +1,98 @@
+
+<!-- Форма для Test с 16-битной мини-игрой -->
+<div id="miniGameContainer" class="mini-game-container">
+    <div class="controls mb-3">
+        <button id="setDestinationBtn" class="btn btn-primary">Установить Пункт Назначения</button>
+        <button id="setObstaclesBtn" class="btn btn-warning">Установить Препятствия</button>
+        <button id="resetGameBtn" class="btn btn-secondary">Сброс</button>
+        <button id="saveSettingsBtn" style="display: none;" class="btn btn-primary">Сохранить</button>
+    </div>
+    <!-- Кнопки управления движением -->
+    <div class="controls text-center mb-3">
+        <button class="btn btn-secondary control-btn" id="moveUp" type="button">⬆️</button>
+        <div class="mt-2">
+            <button class="btn btn-secondary control-btn" id="moveLeft" type="button">⬅️</button>
+            <button class="btn btn-secondary control-btn" id="moveDown" type="button">⬇️</button>
+            <button class="btn btn-secondary control-btn" id="moveRight" type="button">➡️</button>
+        </div>
+    </div>
+    <div id="miniGameGrid" class="game-grid-container"></div>
+    <div id="dataDisplay" class="mt-3">
+        <h5>Информация о текущем состоянии:</h5>
+        <p id="pathDisplay">Цепочка: </p>
+        <p id="obstaclesDisplay">Препятствия: </p>
+        <p id="destinationDisplay">Пункт назначения: </p>
+    </div>
+    
+</div>
+
+<style>
+.mini-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.controls {
+    margin-bottom: 15px;
+}
+
+.game-grid-container {
+    display: grid;
+    grid-template-columns: repeat(8, 50px); /* 8 колонок с шириной 50px */
+    grid-template-rows: repeat(8, 50px); /* 8 строк с высотой 50px */
+    gap: 1px; /* Расстояние между ячейками */
+}
+
+.grid-cell {
+    background-color: #8FBC8F; /* Зеленый цвет по умолчанию */
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc; /* Граница для лучшей видимости */
+}
+
+.flag {
+    background-color: #FF6347; /* Красный цвет для пункта назначения */
+}
+
+.rock {
+    background-color: #808080; /* Серый цвет для препятствий */
+}
+
+.character {
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px; /* Размер смайла */
+}
+
+</style>
+
+
+<script>
+    // Отключение отправки формы при нажатии на кнопки
+    $('#setDestinationBtn, #setObstaclesBtn').on('click', function (e) {
+        e.preventDefault(); // Отключение стандартного поведения отправки формы
+    });
+
+    // Логика переключения режимов (пример)
+    $('#setDestinationBtn').on('click', function () {
+        // Логика для установки пункта назначения
+        settingDestination = true;
+        settingObstacles = false;
+    });
+
+    $('#setObstaclesBtn').on('click', function () {
+        // Логика для установки препятствий
+        settingDestination = false;
+        settingObstacles = true;
+    });
+
+    {% include "alter_authentication/profile/special_test/mini_game_settings.js" %}
+</script>

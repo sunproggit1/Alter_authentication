@@ -1,0 +1,28 @@
+<h2>Регистрация нового пользователя</h2>
+<div class="login-form-container">
+    <form method="post">
+        {% csrf_token %}
+        {% comment %}
+        {{ form.username.label}}
+        <input type="text" name="username" class="form-control form-control-sm" id="id_username">
+        {% endcomment %}
+
+        {% for field in form %}
+        <p>
+            {% comment %}{% if field.name not in 'username' %}{% endcomment %}
+            
+            {{ field.label_tag }} {{ field }}
+                {% for error in field.errors %}
+                <p style="color: red;">{{ error }}</p>
+                {% endfor %}
+            {% comment %}{% endif %}{% endcomment %}
+        </p>
+        {% endfor %}
+        <button class="btn btn-primary" type="submit">Зарегистрироваться</button>
+    </form>
+    
+</div>
+<div class="container m-2">
+    <a class="btn btn-danger m-2" href="{%  url 'newlogin' %}">Вернуться к странице логина
+    </a>
+</div>

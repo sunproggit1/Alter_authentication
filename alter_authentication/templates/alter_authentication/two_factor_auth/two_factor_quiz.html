@@ -1,0 +1,17 @@
+{% load authentication_tags %}
+<div class="form-group">
+    <label for="quiz_question">Ваш вопрос:</label>
+    <p><strong>{{ auth_second_factor.passvalue|get_from_json:"question" }}</strong></p>
+    <label for="user_data">Ваш ответ:</label>
+    {{ form.user_data }}
+    {% if form.user_data.errors %}
+        <div class="invalid-feedback d-block">
+            {% for error in form.user_data.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="form-group text-center mt-3">
+        <button type="submit" class="btn btn-primary">Подтвердить</button>
+    </div>
+</div>

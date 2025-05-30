@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+{% load static %} <!-- Подключение Django шаблонного тега для работы со статическими файлами -->
+<head>
+   <meta charset="utf-8"> <!-- Установка кодировки страницы -->
+   <meta name="robots" content="noindex"> <!-- Запрет индексации страницы поисковыми системами -->
+   <meta http-equiv="Content-Language" content="ru"> <!-- Указание языка контента страницы -->
+   <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Адаптация страницы под мобильные устройства -->
+
+   <!-- Подключение Bootstrap (CSS и JavaScript) -->
+   <link rel="stylesheet" type="text/css" href="{% static 'alter_authentication/css/bootstrap.css' %}"/>
+   <script src="{% static 'alter_authentication/js/popper_min.js' %}"></script>
+   <script src="{% static 'alter_authentication/js/jquery_min_3_6_0.js' %}"></script>
+   <script src="{% static 'alter_authentication/js/jquery_ui_min.js' %}"></script>
+   <script src="{% static 'alter_authentication/js/math_min.js' %}"></script>
+   <script src="{% static 'alter_authentication/js/bootstrap.js' %}"></script>
+   <link rel="stylesheet" href="{% static 'alter_authentication/css/bootstrap_icons.css' %}">
+
+   <!-- Подключение плагина Select2 для улучшенных выпадающих списков -->
+   <link href="{% static 'alter_authentication/select2/css/select2.min.css' %}" rel="stylesheet" />
+   <script src="{% static 'alter_authentication/select2/js/select2.min.js' %}"></script>  
+
+   <!-- Подключение собственных стилей -->
+   <link rel="stylesheet" type="text/css" href="{% static 'alter_authentication/css/custom_elements.css' %}"/>
+
+   <!-- Подключение библиотеки для сохранения HTML в PDF -->
+   <script src="{% static 'alter_authentication/js/html2pdf.bundle.js' %}"></script>
+
+   <!-- Подключение библиотеки для валидации форм на клиентской стороне -->
+   <script src="{% static 'alter_authentication/js/jquery.validate.js' %}"></script>
+
+   <!-- Подключение библиотеки Flatpickr для удобного выбора дат -->
+   <link rel="stylesheet" href="{% static 'alter_authentication/css/flatpickr.min.css' %}">
+   <script src="{% static 'alter_authentication/js/flatpickr.js' %}"></script>
+
+   <!-- Установка заголовка страницы -->
+   {% if page_title %}
+    <title>{{page_title}}</title>
+   {% else %}
+    <title>Alternative authentication</title>
+   {% endif %}
+
+   <!-- Дополнительные стили -->
+   <style>
+        body {
+        }
+    </style>
+</head>
+<body style="background-color: var(--body-color);"> <!-- Установка фонового цвета -->
+    {% include 'welcome/welcome_header/welcome_header.html' %} <!-- Включение верхнего меню из другого шаблона -->
+
+    <!-- Верхний прогресс-бар для отображения загрузки -->
+    <div class="loading-bar" id="loading_bar" style="display:none;"></div>
+
+    <!-- Основное содержимое страницы -->
+    {% block content %}{% endblock %}
+
+</body>
+</html>

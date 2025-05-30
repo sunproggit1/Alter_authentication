@@ -1,0 +1,1409 @@
+:root {
+  --body-color: #F1F1F1;
+  --container-color: #D0D3D4;
+  --panel-color: #ECF0F1;
+  --sub-panel-color: #EAEDED;
+  --hover-color: #F9E79F;
+  --button-color: #FBFCFC ;
+  --selected-color: #F7DC6F;
+  --menu-color:#8C8E8E;
+
+  --my-green: #81FF1E;
+  --my-orange: #FFC300;
+  --my-red: #FF5733;
+  --my_ellow: #DFFF00;
+  --my_skyblue: #6495ED;
+  --my_sea: #40E0D0;
+  --my_purple :#CCCCFF;
+  --my_darkgray: #808B96;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.number::after {
+  content: format('### ### ###', attr(data-number));
+}
+
+.parent {
+    position: relative; /* необходимо для корректной работы абсолютного позиционирования дочернего элемента */
+
+}
+
+.ajax-load-bar {
+  position: fixed; /* Фиксированное позиционирование */
+  top: 0; /* Расположение в верхней части экрана */
+  left: 0;
+  width: 0%; /* Начальная ширина */
+  height: 5px; /* Высота прогресс бара */
+  /* background-color: #4caf50;
+  transition: width 2s ease-in-out; */
+}
+
+.panel{
+  padding: 10px;
+  background-color: white;
+  border-radius: 16px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.7),
+        rgba(255, 255, 255, 0.7) 10px,
+        transparent 10px,
+        transparent 20px
+    ); */
+    background: rgba(248, 249, 250, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+}
+.img-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* Задайте нужный цвет или фон для перекрытия */
+  z-index: 2; /* Установите значение z-index для позиционирования поверх других элементов */
+}
+
+/* скрывает скролбары */
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent; /* Делает фон прозрачным */
+}
+
+.hide-empty:empty {
+  /* скрывает элемент если у него нет содержимого */
+  display: none;
+}
+
+.new-task-popup {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  z-index: 10;
+
+  padding: 5px;
+  background: #fff;
+  border: 2px solid red;
+  margin-bottom: 10px;
+  border-radius: 0 10px 10px 10px;
+  max-width: 450px;
+}
+
+.header_navbar {
+  margin-left: 8px;
+  margin-right: 8px;
+  height: 65px;
+  padding: 5px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: var(--menu-color);
+  /* overflow: hidden; */
+}
+
+.foldable{
+  /* position: absolute; */
+  bottom: 0;
+  height: 100%;
+  /* height: 100vh; Новую - закомментировать */
+  /* height: calc(100vh); */
+  overflow-x: hidden;  
+  overflow-y: scroll;
+  /* transition: width 2s; */
+}
+
+.foldable_vertical_container{
+  /* контейнер для вертикального адаптивного размещения
+  верхнего статичного блока и нижнего блока с возможностью скроллинга */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.fvc_upper_block {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.fvc_scrollable_block{
+  /* нижний подстраивающийся блок с возможностью прокрутки*/
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: calc(100% - 10px);
+  /* новая - раскомментировать height: calc(90% - 10px);           автоматическая высота, основанная на содержимом */
+  /* новая - раскомментировать max-height: calc(100% - 10px);       максимальная высота - 80% высоты экрана */
+  border-radius:10px;
+}
+
+.hide_empty:empty {
+  display: none;
+}
+
+
+.card {
+  min-height: 55px;
+}
+
+.card_trunk {
+  background-color: var(--container-color);
+  padding: 5px;
+  border-radius: 8px;
+}
+
+/* новые классы для отображения иерархии карточек - пришедшие на смену tree */
+
+
+
+
+ul.scheme  {
+  list-style: none;
+  padding-left: 40px;
+}
+
+ul.scheme.only_child  {
+  padding-left: 0px;
+}
+
+li.scheme  {
+  list-style: none;
+  position: relative;
+}
+
+/* Прорисовка стрелочек для li, которые не имеют класса only_child */
+li.scheme:not(.only_child)::before {
+  content: "";
+  border-left: 2px solid #85929E;
+  position: absolute;
+  height: calc(100% + 20px);
+  top: 0;
+  left: -20px;
+}
+
+li.scheme:not(.only_child)::after {
+  content: "";
+  border-bottom: 2px solid #85929E;
+  position: absolute;
+  top: 20px;
+  left: -20px;
+  width: 20px;
+}
+
+li.scheme:not(.only_child):last-child::before {
+  height: 20px;
+}
+
+
+/* новые классы для отображения иерархии карточек - пришедшие на смену tree  конец*/
+
+.tree-end {
+	padding: 5px;
+	position: relative;
+	background: var(--button-color);
+  border: none;
+	/* border: 1px solid #737373; */
+  margin-top: 10px;
+  margin-bottom: 0px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* тень сверху вниз */
+  /* max-width: 800px; */
+}
+
+.card_for_instpanel {
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+  border-width: 1px;
+  margin-top: 10px;
+  border-style: solid; /* Добавляем стиль рамки */
+  border-color: #495057; /* Цвет рамки - серый */
+}
+
+.tree-end:hover {
+  background-color: var(--hover-color); /* немного более яркий бежевый цвет при наведении */
+}
+
+.tree-end.selected {
+  background-color: #F0E097 ;
+  border-width: 3px;
+  border-style: solid;
+  border-color: #F9C400;
+  transition: background-color 0.2s ease;
+}
+
+.caret_down::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 13px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--menu-color); /* Цвет стрелки */
+}
+
+.caret_down {
+  position: relative; /* Делает возможным абсолютное позиционирование для дочерних элементов */
+}
+
+
+
+.tree-end > .active {
+  border-color: orange;
+}
+
+/* .tree > .follower {
+  margin-left: 20px;
+  border-color: red;
+} */
+
+.tree-leader {
+	position: relative;
+}
+
+.tree-leader:after, .tree-leader:before {
+	content: "";
+	border: solid transparent;
+	position: absolute;
+ 	top: 100%;
+	left: 14px;
+}
+.tree-leader:after {
+	border-top-color: #949594;
+	border-width: 8px;
+	margin-left: 0;
+}
+.tree-leader:before {
+	border-top-color: #949594;
+	border-width: 9px;
+	margin-left: -1px;
+}
+
+ul.tree  {
+  list-style: none;
+  padding-left: 40px;
+}
+
+li.tree  {
+  list-style: none;
+  position: relative;
+  /* padding-top: 5px;
+  border: 2px solid beige;
+  border-radius: 10px;
+  padding: 5px; /* добавим немного отступа внутри рамки */ */
+}
+
+.tree li::before{
+  content: "";
+  border-left: 2px solid;
+  border-color: #85929E;
+  position: absolute;
+  height: calc(100% + 15px);
+  top: 0;
+  left: -20px;
+}
+
+.tree li::after{
+  content: "";
+  border-bottom: 2px solid;
+  border-color: #85929E;
+  position: absolute;
+  top: 15px;
+  left: -20px;
+  width: 20px;
+}
+
+.tree li:last-child::before{
+  height: 15px;
+}
+
+.tree-root {
+	padding: 5px;
+	position: relative;
+	background: #fff;
+	border: 1px solid #737373;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  /* max-width: 800px; */
+}
+
+.children_trunk {
+  padding: 5px;
+  background-color: var(--panel-color);
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+
+  margin-top: -8px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 8px;
+    /* Добавление белых границ */
+    border-left: 4px solid var(--button-color);
+    border-bottom: 4px solid var(--button-color);
+    border-right: 4px solid var(--button-color);
+}
+
+/* Используется при сортировки и отображении сортированных груп колонками */
+.columns {
+  display: flex; /* использование flexbox */
+  overflow-x: auto; /* включение горизонтального скролла при необходимости */
+  white-space: nowrap; /* предотвращение переноса колонок на новую строку */
+}
+
+.mark_element {
+  font-size: small;          /* Установка размера шрифта */
+  white-space: nowrap;       /* Запрет переноса текста на новую строку */
+  overflow: hidden;          /* Скрытие содержимого, выходящего за рамки элемента */
+  text-overflow: ellipsis;   /* Добавление многоточия, если текст не помещается полностью */
+  border: 1px solid black;   /* Обводка рамки черного цвета */
+  border-radius: 4px;        /* Скругление углов радиусом 4 пикселя */
+  padding-left: 4px;
+  padding-right: 4px;
+  max-width: 80px;
+  background-color: white;
+  margin-right: 5px;
+}
+
+.details_columns {
+  width: 400px;
+  box-sizing: border-box; /* теперь ширина включает внутренние отступы и рамки */
+  margin-right: 15px; /* отступ между колонками */
+  padding: 0px; /* Пример внутренних отступов */
+}
+
+
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 1px;
+}
+
+
+.calendar-item {
+  border: 1px solid #737373;
+  background-color: #fff;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+}
+
+.calendar-item-container:after, .calendar-item-container:before {
+	content: "";
+	border: solid transparent;
+	position: absolute;
+ 	top: 100%;
+	left: 16px;
+}
+.calendar-item-container:after {
+	border-top-color: #949594;
+	border-width: 8px;
+	margin-left: 0;
+}
+.calendar-item-container:before {
+	border-top-color: #949594;
+	border-width: 9px;
+	margin-left: -1px;
+}
+
+.calendar-item:hover {
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
+}
+
+.calendar-item.Пн {
+  grid-column-start: 1;
+}
+
+.calendar-item.Вт {
+  grid-column-start: 2;
+}
+
+.calendar-item.Ср {
+  grid-column-start: 3;
+}
+
+.calendar-item.Чт {
+  grid-column-start: 4;
+}
+
+.calendar-item.Пт {
+  grid-column-start: 5;
+}
+
+.calendar-item.Сб {
+  grid-column-start: 6;
+}
+
+.calendar-item.Вс {
+  grid-column-start: 7;
+}
+
+.fc_block {
+  /* position: relative;
+  overflow: visible; Обеспечивает видимость стрелки, выходящей за пределы элемента */
+  background-color: var(--container-color);
+  border-radius: 20px;
+  /* margin: 10px; */
+  margin-left: 10px;
+  padding: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.fc_block.selected {
+  background-color: var(--container-color);
+  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #F9C400;
+  transition: background-color 0.2s ease;
+}
+
+.fc_block.selected::after {
+  content: "";
+  position: absolute;
+  right: -15px; /* Располагает стрелку справа от элемента */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 15px;
+  border-color: transparent transparent transparent #F9C400;
+}
+
+.fc_block.faded {
+  background-color: var(--container-color); /* бежевый цвет */
+  border-radius: 20px; /* округление углов */
+  /* transition: background-color 0.2s ease; /* плавное изменение цвета за 0.5 секунды */ */
+}
+
+.fc_block:hover {
+  background-color: var(--container-color); /* немного более яркий бежевый цвет при наведении */
+}
+
+.custom-flex {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+.foldable_parent {
+    margin-top: 10px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+}
+
+.mid_wind {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* новая - закомментировать */
+        }
+
+.upper_block_panel {
+    background-color: var(--sub-panel-color);
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+}
+
+.top-left-corner {
+  position: absolute;
+  z-index:2;
+  top: 0;
+  left: 0;
+  background-color: var(--menu-color); /* Небольшая прозрачность */
+  overflow: auto;
+  width: auto;
+  color: white;
+  padding: 1px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.img_overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: var(--menu-color); /* Небольшая прозрачность */
+    overflow: auto;
+    width: auto;
+    color: white;
+    padding: 1px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.img_overlay_text {
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+.mark {
+        position: absolute;
+        background-color: transparent;
+        z-index: 2;
+        top: -10px; /* измените это значение, чтобы контролировать выход за границы сверху */
+        right: 20px; /* измените это значение, чтобы контролировать выход за границы справа */
+        /* width: 50px;
+        height: 50px;
+        border: 2px solid red; */
+    }
+
+.mark-left {
+        position: absolute;
+        background-color: transparent;
+        z-index: 3;
+        left: -20px; /* измените это значение, чтобы контролировать выход за границы сверху */
+        /* width: 50px;
+        height: 50px;
+        border: 2px solid red; */
+    }
+
+.mark-right {
+        position: absolute;
+        background-color: transparent;
+        z-index: 30;
+        left: 95%;
+        width: 50px;
+        height: 50px;
+        border: 2px solid red;
+    }
+
+    .loading-bar {
+        position: fixed; /* Фиксированное позиционирование */
+        top: 0; /* Расположение в верхней части экрана */
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background-color: var(--menu-color);
+        overflow: hidden;
+        z-index: 100;
+    }
+
+    .loading-bar:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: var(--my_skyblue); /* Ваш цвет (в данном случае синий) */
+        animation: loading-bar 5s linear infinite;
+    }
+
+    @keyframes loading-bar {
+        0% {
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+        50% {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        51% {
+            transform: scaleX(1);
+            transform-origin: right;
+        }
+        100% {
+            transform: scaleX(0);
+            transform-origin: right;
+        }
+    }
+
+    .loading-bar-success:before {
+        background-color: var(--my-green); /* Ваш зеленый цвет */
+        animation: none;
+        transform: scaleX(1);
+        transition: background-color 0.5s ease;
+    }
+
+    .loading-bar-fail:before {
+        background-color: var(--my-red); /* Ваш красный цвет */
+        animation: none;
+        transform: scaleX(1);
+        transition: background-color 0.5s ease;
+    }
+
+    .loading-bar-wait:before {
+        background-color: var(--menu-color); /* Ваш красный цвет */
+        animation: none;
+        transform: scaleX(1);
+        transition: background-color 0.5s ease;
+    }
+
+    .transparent {
+        opacity: 0;
+        transition: opacity 0.1s ease-out;
+    }
+
+    /* Общий стиль для панели меню */
+.menu-panel {
+  width: 65px; /* начальная ширина панели */
+  height: 98%; /* высота панели */
+  position: fixed; /* фиксированное положение */
+  background-color: var(--menu-color); /* фоновый цвет */
+  overflow-x: hidden; /* скрыть горизонтальный скролл */
+  transition: 0.2s; /* анимация перехода */
+  z-index: 1000; /* Это значение убедится, что панель будет поверх остальных элементов */
+  white-space: nowrap; /* Это свойство предотвращает перенос текста на новую строку */
+  overflow: hidden; /* Это свойство скрывает часть текста, которая не умещается в ширину элемента */
+  border-top-right-radius: 20px;    /* Скругление верхнего правого угла */
+  border-bottom-right-radius: 20px; /* Скругление нижнего правого угла */
+  opacity: 0.95;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  backdrop-filter: blur(10px); /* Это свойство создаст эффект размытия для элементов за панелью */
+  display: flex; /* Используем flexbox для расположения в столбик */
+  flex-direction: row; /* Располагаем элементы в столбик */
+}
+
+/* Стиль для элементов меню внутри панели */
+.menu-panel a {
+  /* padding: 8px 15px; */ /* здесь старые значения мешающие нормальному отображению ссылок в main_menu */
+  text-decoration: none;
+  /* font-size: 25px; */ /* здесь старые значения мешающие нормальному отображению ссылок в main_menu */
+  color: #010101;
+  display: block;
+  transition: 0.3s; /* анимация перехода */
+}
+
+/* Изменение стилей при наведении на панель */
+.menu-panel:hover {
+  width: 400px; /* новая ширина панели при наведении */
+}
+
+/* Изменение стилей при наведении на элементы меню */
+.menu-panel a:hover {
+  color: #6a6666;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5); /* Горизонтальное смещение, вертикальное смещение, размытие, цвет тени */
+}
+
+.menu_container {
+  /* width: 40px; */
+  height: 100vh; /* высота контейнера будет равна всей высоте экрана */
+  display: flex; /* включение flexbox */
+  flex-direction: column; /* вертикальное направление */
+}
+
+.extended_menu_container {
+  padding: 10px;
+  width: 100%;
+  /* overflow-y: auto; новая - раскомментировать */
+}
+
+.top {
+  display: flex; /* включение flexbox */
+  flex-direction: column; /* вертикальное направление */
+}
+
+.middle {
+  display: flex; /* включение flexbox */
+  flex-direction: column; /* вертикальное направление */
+}
+
+.bottom {
+  display: flex; /* включение flexbox */
+  flex-direction: column;/* вертикальное направление */
+  margin-bottom: 34px;
+}
+
+.workspace {
+  display: flex; /* Используем Flexbox */
+  flex-direction: column; /* Элементы располагаются в колонку */
+  height: 100%; /* Задаем высоту контейнера, например, равной высоте видимой части экрана */
+  margin-left:60px;
+  margin-right:60px;
+  bottom:0px;
+  overflow: hidden;
+  flex-wrap: nowrap; 
+  position: relative;
+  transition: width 0.5s ease-in-out; /* Анимация изменения ширины */
+}
+
+.workspace.my_cabinet_workspace {
+  margin-left:0px;
+  margin-right:0px;
+}
+
+
+.workspace.with_instrument_panel {
+  margin-right:auto;
+  width: calc(75vw - 65px);
+}
+
+.instruments-panel {
+  width: 65px; /* начальная ширина панели */
+  transition: width 0.5s ease-in-out; /* Анимация изменения ширины */
+  height: 98%; /* высота панели */
+  position: fixed; /* фиксированное положение */
+  right: 0px;
+  top: 0px;
+  background-color: var(--menu-color); /* фоновый цвет */
+  overflow-x: hidden; /* скрыть горизонтальный скролл */
+  transition: 0.2s; /* анимация перехода */
+  z-index: 1000; /* Это значение убедится, что панель будет поверх остальных элементов */
+  white-space: nowrap; /* Это свойство предотвращает перенос текста на новую строку */
+  overflow: hidden; /* Это свойство скрывает часть текста, которая не умещается в ширину элемента */
+  border-top-left-radius: 20px;    /* Скругление верхнего правого угла */
+  border-bottom-left-radius: 20px; /* Скругление нижнего правого угла */
+  opacity: 0.95;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  padding: 0px;
+  backdrop-filter: blur(10px); /* Это свойство создаст эффект размытия для элементов за панелью */
+  display: flex; /* Используем flexbox для расположения в столбик */
+  flex-direction: row; /* Располагаем элементы в столбик */
+}
+
+.instruments-panel.opened {
+  width: calc(25vw);
+}
+
+.inst_panel_details {
+  display: none;
+  position: fixed; 
+  left: 65px;
+  top: 0;
+  width: calc(100% - 65px);
+  /* overflow: hidden; */
+  padding: 5px;
+  margin-top: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: var(--panel-color);
+  height: 97%; 
+  overflow-y: auto;
+}
+.inst_panel_details.active {
+  display: block;
+}
+ 
+.menu_icon{
+  width:45px;
+  height: 45px;
+  margin:5px;
+  border-radius: 10px;
+  background-color: var(--button-color);
+  display: flex;
+  justify-content: center; /* Горизонтальное выравнивание по центру */
+  align-items: center; /* Вертикальное выравнивание по центру */
+}
+
+.menu_icon:hover{
+  background-color: var(--hover-color); /* немного более яркий бежевый цвет при наведении */
+}
+
+.menu_icon.selected{
+  background-color: var(--selected-color);
+  border-width: 3px;
+  border-style: solid;
+  border-color: #F9C400;
+  transition: background-color 0.2s ease;
+}
+
+.inst_icon{
+  width:45px;
+  height: 45px;
+  margin:10px;
+  border-radius: 10px;
+  background-color: var(--panel-color);
+  display: flex;
+  justify-content: center; /* Горизонтальное выравнивание по центру */
+  align-items: center; /* Вертикальное выравнивание по центру */
+}
+
+
+.inst_icon:hover{
+  background-color: var(--hover-color);
+}
+
+
+/* класс выделения для инструментальной панели */
+.inst_icon.inst_selected{
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  position: relative;
+  margin-right: 0px;
+  width:65px;
+  background-image: linear-gradient(to right, var(--selected-color), var(--panel-color));
+}
+
+.fold_header{
+  margin-bottom: 10px;
+}
+
+/* .inst_selected::after {
+  content: "";
+  display: block;
+  width: 12px; 
+  height: 100%;
+  background-color: var(--button-color);
+  background-image: linear-gradient(to right, var(--button-color), var(--panel-color));
+  position: absolute;
+  top: 0;
+  right: -10px;
+} */
+
+/* настройки для мобильных устройств */
+@media (max-width: 576px) {
+    .mid_wind {
+        height: 100%; /* на маленьких экранах занимает все доступное пространство */
+        /* если нужно контент тоже выровнять по центру, оставьте следующие свойства */
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .foldable_vertical_container{
+      margin: 0px;
+      border-radius: 0px;
+    }
+
+    .foldable_parent{
+      margin-top: 0px;
+    }
+
+    .workspace {
+      height: calc(100% - 65px);
+      margin-left:0px;
+      margin-right:0px;
+      margin-top: 58px;
+    }
+
+    .workspace.my_cabinet_workspace {
+      height: 100vh;
+      margin-left:0px;
+      margin-right:0px;
+      margin-top: 0px;
+    }
+
+    .header_navbar {
+      margin-top: 0px;
+      margin-right: 0px;
+      margin-left: 0px;
+      margin-bottom: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px; 
+      height: 60px;
+      padding: 5px;     
+    }
+
+    .menu-panel {
+      top: 0px; /* Прикрепить панель к нижней границе экрана */
+      width: 100%; /* Занимать всю ширину экрана */
+      height: 60px; /* Высота 60 пикселей */
+      margin-top: 0px;
+      margin-right: 0px;
+      margin-bottom: 0px;
+      padding: 2px;
+      position: fixed;
+        border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      flex-direction: column;
+    }
+    .menu-panel:hover {
+      height: auto; /* Высота будет автоматически подстраиваться */
+      width: 100%;
+    }
+
+    .menu_container {
+      height: 50px;
+      display: flex; /* включение flexbox */
+      flex-direction: row; /* вертикальное направление */
+    }
+
+    .extended_menu_container {
+        padding: 10px;
+        width: 100%;
+        height: 450px;
+        max-height: 80vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    /* новая - раскомменировать
+    .foldable{
+        bottom: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      */
+}
+
+.tile-btn {
+  padding: 10px;
+	position: relative;
+  border: none;
+  height: 100%;
+	background: var(--button-color);
+  text-align: center;
+  margin: 0px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* тень сверху вниз */
+  transition: box-shadow 0.2s ease; /* Плавное изменение тени при изменении */
+}
+
+.tile-btn.active {
+  background-color: #F0E097 ;
+  border-width: 3px;
+  border-style: solid;
+  border-color: #F9C400;
+}
+
+/* Ваш подкласс для оранжевой линии */
+.tile-btn.stroke_orange::before {
+  content: "";
+  position: absolute;
+  bottom: 4px; /* Отступ снизу */
+  left: 4px; /* Отступ слева */
+  right: 4px; /* Отступ справа */
+  height: 3px; /* Толщина линии */
+  background-color: orange;
+  border-radius: 3px; /* Скругленные края */
+}
+
+/* Ваш подкласс для красной линии */
+.tile-btn.stroke_red::before {
+  content: "";
+  position: absolute;
+  bottom: 4px; /* Отступ снизу */
+  left: 8px; /* Отступ слева */
+  right: 8px; /* Отступ справа */
+  height: 3px; /* Толщина линии */
+  background-color: red;
+  border-radius: 3px; /* Скругленные края */
+}
+
+/* Ваш подкласс для синей линии */
+.tile-btn.stroke_blue::before {
+  content: "";
+  position: absolute;
+  bottom: 4px; /* Отступ снизу */
+  left: 8px; /* Отступ слева */
+  right: 8px; /* Отступ справа */
+  height: 3px; /* Толщина линии */
+  background-color: blue;
+  border-radius: 3px; /* Скругленные края */
+}
+
+.tile-btn:hover {
+  background-color: var(--hover-color);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Новая тень при наведении */
+}
+
+/* родитель вкладок */
+.tabs {
+  display: flex; /* Используем flex контейнер */
+  overflow: hidden; /* Скрываем содержимое, которое не помещается */
+  /* overflow-x:auto; */
+  white-space: nowrap; /* Предотвращаем перенос текста на следующую строку */
+  height: 55px;
+  margin-top: auto; /* Выравнивание по нижнему краю */
+}
+
+
+/* Скрыть все содержимое вкладок */
+.tab-content {
+  display: none;
+  background-color: var(--sub-panel-color);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 10px;
+  min-height: 100%;
+}
+
+/* Показать активную вкладку */
+.tab-content.active {
+  display: block;
+}
+
+/* Стили для кнопок вкладок */
+/* Стили для кнопок вкладок */
+.tab-button {
+  color: #808080;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: relative;
+  background-color: var(--button-color);
+  border: none;
+  max-width: 45%;
+  height: 55px;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 0px;
+  padding: 12px;
+  cursor: pointer;
+  /* flex: 1; /* Распределяем доступное пространство равномерно */ */
+}
+
+/* Стили для активной кнопки */
+.tab-button.active {
+  background-color: var(--sub-panel-color);
+  margin-bottom:  0px; /* Устанавливаем отрицательный отступ для увеличения расстояния между активной кнопкой и нижним элементом */
+  padding-bottom: 20px; /* Меняем отрицательное значение padding-bottom, если требуется */
+}
+
+/* Скрываем псевдоэлемент для активных кнопок */
+.tab-button.active::after {
+  display: none;
+}
+
+.tab-button:hover {
+  background-color: var(--hover-color)
+}
+
+/* Стили для наложенного элемента */
+.tab-button::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 7px;
+  background-color: var(--container-color);
+}
+
+/* Стили для обзора работ содержащихся в задании */
+.work_review {
+  font-size: small; /* Устанавливает маленький размер текста */
+  text-decoration: underline; /* Добавляет подчеркивание */
+  text-decoration-thickness: 4px; /* Задает толщину подчеркивания в 5 пикселей */
+  margin-left: 5px; /* Отступ слева */
+}
+
+.work_review.red{
+  text-decoration-color: rgb(255, 0, 0); 
+}
+
+.work_review.orange{
+  text-decoration-color: rgb(255, 162, 0); 
+}
+
+.work_review.green{
+  text-decoration-color: rgb(0, 255, 0); 
+}
+
+.work_review.blue{
+  text-decoration-color: rgb(0, 0, 255); 
+}
+
+.work_review.purple{
+  text-decoration-color: rgb(128, 0, 128); 
+}
+
+.work_review.black{
+  text-decoration-color: rgb(0, 0, 0); 
+}
+
+.work_review.lightblue{
+  text-decoration-color: rgb(173, 216, 230); 
+} 
+
+.work_review.yellow{
+  text-decoration-color: rgb(255, 255, 0); 
+}
+
+
+button:focus {
+  outline: none; /* Убирает контур при фокусе */
+}
+
+.resizable {
+  max-height: 120px; /* Максимальная высота блока в нормальном состоянии */
+  overflow: hidden; /* Скрываем содержимое, которое не помещается в блоке */
+  transition: max-height 0.3s ease; /* Анимация изменения высоты */
+  position: relative; /* Позиционируем блок как относительный, чтобы добавить градиентный фон */
+}
+
+.resizable:hover {
+  /* max-height: 125px;  */
+}
+
+.resizable:hover .resizable-overlay{
+  display: none; /* При наведении мыши элемент-потомок исчезает */
+}
+
+.resizable-overlay {
+  position: absolute;
+  pointer-events: none;
+  width: 100%;
+  height: 80%; 
+  background: linear-gradient(to top, var(--container-color), transparent); /* Градиент сверху */
+  bottom: 0px;
+  transition: opacity 0.5s ease; /* Плавное изменение прозрачности */
+}
+
+.resizable-overlay:hover {
+  opacity: 0; /* Прозрачный при наведении */
+}
+
+/* Элементы формы */
+.nt-form {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.form-control {
+  border-radius: 8px;
+}
+
+.nt-form:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+}
+
+/* Для отображения "недопустимого" ввода */
+.nt-form.is-invalid {
+  border-color: #dc3545;
+}
+
+.nt-form.is-invalid:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 .2rem rgba(220, 53, 69, .25);
+}
+
+/* Для отображения "допустимого" ввода */
+.nt-form.is-valid {
+  border-color: #28a745;
+}
+
+.nt-form.is-valid:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 0 .2rem rgba(40, 167, 69, .25);
+}
+
+
+.fixed-height-row {
+  height: 25px; /* Высота строки */
+  overflow: hidden; /* Скрыть лишний контент */
+}
+
+.fixed-height-row td {
+  white-space: nowrap; /* Не переносить текст */
+  text-overflow: ellipsis; /* Обрезать и добавить многоточие */
+  overflow: hidden; /* Скрыть лишний контент */
+  padding: 0px;
+}
+
+
+/* Элементы формы вставленные в таблицу */
+.table-input {
+  width: 100%;        /* Занимает всё пространство ячейки */
+  height: 100%;
+  border: none;       /* Убирает рамку */
+  box-shadow: none;   /* Убирает тень, если она есть */
+  border-radius: 0px;
+  background-color: transparent;
+}
+
+/* текст накладываемый на прогресс бар у класса .progress должно быть position: relative; */
+.progress-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black; /* или другой цвет текста */
+}
+
+/* невидимый блок для группировки и сортировки карточек */
+.categorizator {
+  display: none;
+}
+
+
+/* вертикальный прогресс бар из 2-х  */
+.vertical_progress_bar {
+  display: flex;
+  margin: 5px;
+  flex-direction: column;
+  height: 98%;
+  width: 12px;
+  border-radius: 6px;
+  background-color: var(--panel-color);
+  overflow: hidden;
+}
+
+.bar {
+  height:100%;
+  background-color: var(--menu-color);
+  transition: height 0.5s ease;
+}
+
+/* всплывающее меню bootstrap 4 */
+.dropdown-menu {
+    z-index: 100;
+    border-radius: 8px;
+}
+
+
+.vp-1, .vp-2 {
+  width: 100%; /* Ширина блоков равна ширине родителя */
+}
+
+.vp-1 {
+  background-color: orange;
+  height: 20%;
+}
+
+.vp-2 {
+  height: 20%;
+  flex-grow: 1;
+  background-color: red;
+  margin-bottom: 35%; /* Отступ, равный высоте первого блока */
+}
+
+
+.fvc_bg_image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.1; /* Прозрачность фонового изображения */
+  z-index: -1; /* Помещает изображение за содержимое div */
+}
+
+.circle_button {
+  background-color: var(--button-color);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px; /* Пример размера шрифта */
+}
+
+.circle_button.attention {
+  background-color: var(--hover-color);
+}
+
+.circle_button:hover {
+  background-color: var(--hover-color);
+}
+
+.circle_button.title {
+  border-radius: 30px; /* Создаем эффект пилюли */
+  width: auto;
+  min-width: 30px;
+  max-width: 100px;
+  padding-left: 0px; /* Устанавливаем отступ слева в 5px */
+  padding-right: 15px; /* Отступ справа от текста, если необходимо */
+  padding: 0 15px; /* Отступы слева и справа от текста */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Выравнивание содержимого по левому краю */
+}
+
+.fold_minimizible {
+  overflow: hidden;
+}
+
+/* Чтобы предотвратить выход текста за рамки родительского объекта 
+и обеспечить его перенос на новую строку в HTML и CSS */
+.text-container {
+  overflow-wrap: break-word;
+  word-wrap: break-word; /* Для старых браузеров */
+  white-space: normal;
+  word-break: break-word; /* Опционально, в зависимости от желаемого эффекта */
+}
+
+/* тема для подклчаемого виджета select2 */
+.select2-container--my_select2_theme .select2-selection {
+  border-radius: 8px;
+  width: 100%;
+  background-color: var(--body-color);
+  /* Добавьте другие стили по вашему усмотрению */
+}
+
+
+
+/* Анимация объектов у которых есть класс instruction*/
+@keyframes blink {
+  0%, 100% { box-shadow: 0 0 0 2px blue; }
+  50% { box-shadow: 0 0 0 2px transparent; }
+}
+
+.instruction {
+  animation: blink 1s infinite;
+}
+
+
+/* В этом примере, любой элемент с классом .my-element станет невидимым на экранах шириной менее 600 пикселей */
+@media (max-width: 750px) {
+    .hide-on-small {
+        display: none;
+    }
+    .custom-flex {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 750px) {
+  .hide_750 {
+      display: none;
+  }
+}
+
+@media (max-width: 150px) {
+    .hide_300 {
+        display: none;
+    }
+}

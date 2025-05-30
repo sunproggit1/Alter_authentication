@@ -1,0 +1,101 @@
+{% load static %}
+{% load authentication_tags %}
+
+<div class="card">
+    <div class="card-header">
+        Настройки двухфакторной аутентификации 
+    </div>
+    <div class="card-body">
+        <!-- Форма выбора метода -->
+        <form id="methodSelectForm">
+            {% csrf_token %} <!-- Токен защиты от CSRF -->
+            <div class="form-group form-check">
+                <!-- Чекбокс для активации/деактивации двухфакторной аутентификации -->
+                <input type="checkbox" class="form-check-input" id="activeToggle" name="activeToggle" 
+                       {% if auth_second_factor and auth_second_factor.active %}checked{% endif %}>
+                <label class="form-check-label" for="activeToggle">Активировать двухфакторную аутентификацию</label>
+            </div>
+            <div class="form-group">
+                <!-- Выпадающий список для выбора метода двухфакторной аутентификации -->
+                <label for="methodSelect">Выберите метод:</label>
+                <select class="form-control" id="methodSelect" name="methodSelect">
+                    <option value="" {% if not auth_second_factor %}selected{% endif %}>Выберите метод...</option>
+                    <option value="OTP" {% if auth_second_factor and auth_second_factor.second_factor == 'OTP' %}selected{% endif %}>Одноразовый пароль</option>
+                    <option value="Quiz" {% if auth_second_factor and auth_second_factor.second_factor == 'Quiz' %}selected{% endif %}>Вопрос-ответ</option>
+                    <option value="Test" {% if auth_second_factor and auth_second_factor.second_factor == 'Test' %}selected{% endif %}>Специальный Тест</option>
+                </select>
+            </div>
+        </form>
+
+        <!-- Форма для OTP -->
+        <form id="otpForm" class="second-factor-form" data-method="OTP" style="display: none;">
+            {% csrf_token %} <!-- CSRF защита -->
+
+            <!-- Скрытое поле для указания метода аутентификации -->
+            <input type="hidden" name="second_factor_method" value="OTP">
+            <div class="form-group">
+                <!-- Поле для ввода email для OTP -->
+                <label for="otpEmail">Введите ваш email:</label>
+                <input type="email" class="form-control" id="otpEmail" name="otpEmail" required value="{{ me.email }}">
+            </div>
+            <div class="error_container text-danger mt-2"></div> <!-- Контейнер для ошибок -->
+            <button type="submit" class="btn btn-primary">Сохранить OTP</button>
+        </form>
+
+        <!-- Форма для Quiz -->
+        <form id="quizForm" class="second-factor-form" data-method="Quiz" style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="second_factor_method" value="Quiz">
+            <div class="form-group">
+                <!-- Выпадающий список с вопросами для Quiz -->
+                <label for="quizQuestion">Выберите вопрос:</label>
+                <select class="form-control" id="quizQuestion" name="quizQuestion">
+                    <option value="Какая ваша любимая песня?" {% if auth_second_factor and auth_second_factor.second_factor == 'Quiz' and auth_second_factor.passvalue|get_from_json:'question' == 'Какая ваша любимая песня?' %}selected{% endif %}>Какая ваша любимая песня?</option>
+                    <option value="Имя вашего первого питомца?" {% if auth_second_factor and auth_second_factor.second_factor == 'Quiz' and auth_second_factor.passvalue|get_from_json:'question' == 'Имя вашего первого питомца?' %}selected{% endif %}>Имя вашего первого питомца?</option>
+                    <option value="Как зовут вашу маму?" {% if auth_second_factor and auth_second_factor.second_factor == 'Quiz' and auth_second_factor.passvalue|get_from_json:'question' == 'Как зовут вашу маму?' %}selected{% endif %}>Как зовут вашу маму?</option>
+                    <option value="В каком городе вы родились?" {% if auth_second_factor and auth_second_factor.second_factor == 'Quiz' and auth_second_factor.passvalue|get_from_json:'question' == 'В каком городе вы родились?' %}selected{% endif %}>В каком городе вы родились?</option>
+                    <option value="Какой у вас любимый фильм?" {% if auth_second_factor and auth_second_factor.second_factor == 'Quiz' and auth_second_factor.passvalue|get_from_json:'question' == 'Какой у вас любимый фильм?' %}selected{% endif %}>Какой у вас любимый фильм?</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <!-- Поле для ввода ответа на выбранный вопрос -->
+                <label for="quizAnswer">Ответ:</label>
+                <input type="text" class="form-control" id="quizAnswer" name="quizAnswer" required placeholder="Введите ваш ответ на вопрос" autocomplete="off" autocorrect="off">
+            </div>
+            <div class="error_container text-danger mt-2"></div>
+            <button type="submit" class="btn btn-primary">Сохранить Ответ</button>
+        </form>
+
+        <!-- Форма для Test -->
+        <form id="testForm" class="second-factor-form" data-method="Test" style="display: none;" action="{% url 'set_changes_for_profile' %}">
+            {% csrf_token %}
+            <input type="hidden" name="second_factor_method" value="Test">
+            <div class="error_container text-danger mt-2"></div>
+
+            <!-- Включение мини-игры для двухфакторной аутентификации -->
+            <div id="miniGameModeContainer">
+                {% include 'alter_authentication/profile/special_test/mini_game_settings.html' %}
+            </div>
+
+            <script>
+                $(document).ready(function () {
+                    // Логика переключения режимов внутри формы Test
+                    $('#test_type').on('change', function () {
+                        let selectedMode = $(this).val();
+                        if (selectedMode === 'puzzle') {
+                            $('#puzzleModeContainer').show(); // Показываем режим "Пазл"
+                            $('#miniGameModeContainer').hide();
+                        } else if (selectedMode === 'miniGame') {
+                            $('#puzzleModeContainer').hide();
+                            $('#miniGameModeContainer').show(); // Показываем режим "Мини-игра"
+                            if (typeof initializeMiniGame === 'function') {
+                                initializeMiniGame(); // Инициализация мини-игры
+                            }
+                        }
+                    });
+                });
+            </script>
+        </form>
+
+    </div>
+</div>
